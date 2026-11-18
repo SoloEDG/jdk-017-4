@@ -24,6 +24,7 @@ export async function decodeAsset(blob: Blob, name: string): Promise<Asset> {
       height: canvas.height,
       data,
       thumbnail: thumb.toDataURL("image/jpeg", 0.7),
+      cube: null,
     };
   } finally {
     bitmap.close();

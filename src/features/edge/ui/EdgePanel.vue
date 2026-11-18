@@ -1,8 +1,10 @@
 <script setup lang="ts">
+import { computed } from "vue";
 import { Blend } from "lucide-vue-next";
 import type { StudioDocument } from "../../../shared/types";
 import { setSeam, setFeather, setBackground } from "../model/settings";
-defineProps<{ doc: StudioDocument }>();
+const props = defineProps<{ doc: StudioDocument }>();
+const isCube = computed(() => !!props.doc.asset?.cube);
 </script>
 <template>
   <section class="panel">
@@ -17,11 +19,15 @@ defineProps<{ doc: StudioDocument }>();
         min="0"
         max="0.15"
         step="0.005"
+        :disabled="isCube"
         :value="doc.edge.seam"
         @input="
           setSeam(doc.edge, Number(($event.target as HTMLInputElement).value))
         " /></label
-    ><label class="control"
+    ><p v-if="isCube" class="mini seam-note">
+      六面立方体按空间方向跨面采样，边界与角点天然连续，无需接缝融合。
+    </p>
+    <label class="control"
       >圆形边缘羽化 <output>{{ Math.round(doc.edge.feather * 100) }}%</output
       ><input
         aria-label="边缘羽化"

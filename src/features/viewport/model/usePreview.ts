@@ -1,6 +1,7 @@
 import { watch, onBeforeUnmount, type Ref, ref } from "vue";
 import type { StudioDocument } from "../../../shared/types";
 import { renderPreview } from "../../projection";
+export const PREVIEW_SIZE = 600;
 export function usePreview(
   doc: StudioDocument,
   canvas: Ref<HTMLCanvasElement | undefined>,
@@ -26,7 +27,7 @@ export function usePreview(
               projection: { ...doc.projection },
               edge: { ...doc.edge },
             },
-            600,
+            PREVIEW_SIZE,
           );
         rendering.value = false;
       });
